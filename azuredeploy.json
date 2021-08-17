@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storages":{
+      "type": "array",
+      "defaultValue":[
+        "abc",
+        "def",
+        "ghi"
+      ]
+
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[concat('is',parameters('storages')[ copyIndex('po')])]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-01-01",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "copy": {
+        "name" : "po",
+      "count" : "[length(parameters('storages'))]"
+      
+    
+    },
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "IterationStorage"
+      },
+      "kind": "Storage"
+    }
+    
+    ],
+  "outputs": {},
+  "functions":[]
+}
